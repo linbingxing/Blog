@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="keywords" content=""/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-dark-mode@0.6.1/dist/style.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: '',
+      repo: '',
+      //coverpage: true,
+      //coverpage: "docs/extra-page/cover.md",
+      auto2top: true,
+      subMaxLevel: 2,
+      loadSidebar: 'summary.md',
+      alias: {
+         // '/.*/.*/summary': 'summary.md',
+         // '/.*/summary.md': 'summary.md',
+          '/spring-cloud-alibaba/.*/summary.md': '/spring-cloud-alibaba/summary.md',
+          '/spring-cloud/.*/summary.md': '/spring-cloud/summary.md',
+          '/java/.*/summary.md': '/java/summary.md',
+          '/mysql/.*/summary.md': '/mysql/summary.md',
+          '/redis/.*/summary.md': '/redis/summary.md',
+      },
+      pagination: {
+        previousText: "上一篇",
+        nextText: "下一篇",
+        crossChapter: true,
+        crossChapterText: true,
+      },
+      count:{
+        countable:true,
+        fontsize:'0.9em',
+        color:'rgb(90,90,90)',
+        language:'chinese'
+      },
+      darkMode: {
+        light: {
+          toggleBtnBg: '#42b983'
+        }
+      },
+      tabs: {
+        persist: true,
+        sync: true,
+        theme: 'classic',
+        tabComments: true,
+        tabHeadings: true
+      },
+      search: {
+          maxAge: 1800000,
+          paths: [ '/'],
+          depth: 3,
+          placeholder: '快速搜索',
+          hideOtherSidebarContent: false, // 是否隐藏其他侧边栏内容
+      },
+      plugins: [
+        function (hook, vm) {
+          hook.beforeEach(function (html) {
+             
+          })
+
+          hook.afterEach(function (html) {
+                    const en = vm.route.file.indexOf('README_EN') != -1
+                    const copyright = en ? '. All Rights Reserved' : ' 版权所有'
+                    const footer = `<footer><span>Copyright © 2018-2020 <a href="https://github.com/linbingxing" target="_blank">linbingxing</a>${copyright}</footer>`
+                    return html + footer
+          })
+        }
+      ]
+    }
+  </script>
+
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!--代码高亮-->
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-c.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-cpp.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+  <!--代码复制-->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <!--搜索-->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.js"></script>
+  <!--表情-->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.js"></script>
+  <!--图片放大-->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify-dark-mode@0.6.1/dist/index.js"></script>
+  <!--分页-->
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <!--字数统计-->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  <!--tab插件-->
+  <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+</body>
+</html>
