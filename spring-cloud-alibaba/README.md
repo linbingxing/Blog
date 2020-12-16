@@ -29,7 +29,7 @@ Spring Cloud Alibaba 也提供了丰富的 [examples](https://github.com/alibaba
 - **Alibaba Cloud OSS**: 阿里云对象存储服务（Object Storage Service，简称 OSS），是阿里云提供的海量、安全、低成本、高可靠的云存储服务。您可以在任何应用、任何时间、任何地点存储和访问任意类型的数据。
 - **Alibaba Cloud SchedulerX**: 阿里中间件团队开发的一款分布式任务调度产品，提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。
 
-## 3. 依赖管理
+## 3.依赖管理
 
 Spring Cloud Alibaba BOM 包含了它所使用的所有依赖的版本。
 
@@ -41,7 +41,7 @@ Spring Cloud Alibaba BOM 包含了它所使用的所有依赖的版本。
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-            <version>2.1.1.BUILD-SNAPSHOT</version>
+            <version>2.1.0.RELEASE</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -50,3 +50,4 @@ Spring Cloud Alibaba BOM 包含了它所使用的所有依赖的版本。
 ```
 
 在下面的章节中，假设您使用的是 Spring Cloud Alibaba bom，相关 starter 依赖将不包含版本号。
+
