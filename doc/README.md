@@ -62,15 +62,53 @@ I/O 模型也有阻塞式 I/O 和非阻塞式 I/O 等多种实现方式。阻塞
 
 ### 服务配置
 
-在微服务架构中，配置中心也是微服务架构中的基础组件。其目的也是对服务进行统一管理，区别在于注册中心管理的对象是配置信息而不是服务的实例信息，对一些公共的配置信息。
+在微服务架构中，配置中心也是微服务架构中的基础组件。其目的也是对服务配置信息进行统一管理。
 
+![配置中心](images\配置中心.png)
 
+为了满足以上要求，配置中心通常需要依赖分布式协调机制，即通过一定的方法确保配置信息在分布式环境中的各个服务中能得到实时、一致的管理。可以采用诸如 Zookeeper 等主流的开源分布式协调框架来构建配置中心。当然，像 Spring Cloud 提供了专门的配置中心实现工具 Spring Cloud Config，阿里巴巴也提供nacos进行配置中心。
 
 ###  服务网关
 
+服务网关也叫API网关。在微服务架构中，服务网关的核心要点是，所有的客户端和消费端都通过统一的网关接入微服务，在网关层处理所有的非业务功能。
+
+![服务网关](images\服务网关.png)
+
+在功能设计上，服务网关在完成客户端与服务器端报文格式转换的同时，它可能还具有身份验证、监控、缓存、请求管理、静态响应处理等功能。另一方面，也可以在网关层制定灵活的路由策略。针对一些特定的 API，我们需要设置白名单、路由规则等各类限制。 Spring Cloud 提供了基于 Netflix Zuul 和 Spring Cloud Gateway 这两种网关。
+
 ### 服务容错
+
+对于分布式环境中的服务而言，服务在自身失败引发生错误的同时，还会因为依赖其他服务而导致失败。除了比较容易想到和实现的超时、重试和异步解耦等手段之外，我们需要考虑针对各种场景的容错机制。
+
+![服务熔断技术](images\服务熔断技术.png)
+
+业界存在一批与服务容错相关的技术组件，包括以失效转移 Failover 为代表的集群容错策略，以线程隔离、进程隔离为代表的服务隔离机制，以滑动窗口、令牌桶算法为代表的服务限流机制，以及服务熔断机制。而从技术实现方式上看，在 Spring Cloud 中，这些机制部分包含在下面要介绍的服务网关中，而另一部分则被提炼成单独的开发框架，例如专门用于实现服务熔断的 Spring Cloud Circuit Breaker 组件。
 
 ###  服务安全
 
+一般意义上的访问安全性，都是围绕认证和授权这两个核心概念来展开。也就是说我们首先需要确定用户身份，然后再确定这个用户是否有访问指定资源的权限。站在单个微服务的角度讲，我们系统每次服务访问都能与授权服务器进行集成以便获取访问 Token。站在多个服务交互的角度讲，我们需要确保 Token 在各个微服务之间的有效传播。在实现微服务安全访问上，我们通常使用 OAuth2 协议来实现对服务访问的授权机制，使用 JWT 技术来构建轻量级的认证体系。Spring 家族也提供了 Spring Security 和 Spring Cloud Security 框架来完整这些组件的构建。
+
+![基于 Token 机制的服务安全结构图](images\基于 Token 机制的服务安全结构图.png)
+
 ###  服务监控
+
+在微服务架构中，当服务数量达到一定量级时，我们难免会遇到两个核心问题。一个是如何管理服务之间的调用关系？另一个是如何跟踪业务流的处理过程和结果？这就需要构建分布式服务跟踪机制。
+
+分布式服务跟踪机制的建立需要完成调用链数据的生成、采集、存储及查询，同时也需要对这些调用链数据进行运算和可视化管理。这些工作不是简单一个工具和框架能全部完成，因此，在开发微服务系统时，我们通常会整合多个开发框架进行链路跟踪。例如，在 Spring Cloud 中，就提供了 Spring Cloud Sleuth 与 Zipkin 的集成方案。
+
+![服务链路跟踪](images\服务链路跟踪.png)
+
+[从单体架构向微服务架构转型，这9个问题需要搞明白](https://mp.weixin.qq.com/s?src=11&timestamp=1612236621&ver=2865&signature=GX6etURZ7b4bpEgiVS-vStw6GLEtKmsINr*GD4ZBIBACqIaXZFXanQX0Bzg30J6O6xejXQfjk4ZkVksGiAPG7IjdtFoQZDQnFQJbiZcyW9z4rSztO61Fb2JqBtuMey1a&new=1)
+
+[华为架构师揭秘微服务架构（单体架构与微服务架构对比）](https://mp.weixin.qq.com/s?src=11&timestamp=1612236621&ver=2865&signature=0bJy5dParY5Wyg-nnuPdX6c9bvhYY3oYdpgMGRWSIi6or9WnluyBzBwDHAImY7eSRKZH9VrmH4Ecuns2VLGz3uZV7sMrJZ-zl3Adw7-*DZipW-2oBOLZ-FMr0w7v4lIn&new=1)
+
+[单体架构，垂直架构，SOA架构和微服务架构的变化历程](https://mp.weixin.qq.com/s?src=11&timestamp=1612237936&ver=2865&signature=Xkc2NYHE23uY2CVt31M1Pkp64HwFGk3dQ4bfI8Yvol4g4Q2OKQkc1x6P-SgqeoKZPC0CsnIHq0yk9mWxOFxiBlUH5riA7tfHPQ0Q8NOS1lXFn2k3oSGx-Y1D4cxOB13W&new=1)
+
+[单体架构,SOA架构,微服务架构,分布式架构,集群架构](https://mp.weixin.qq.com/s?src=11&timestamp=1612237936&ver=2865&signature=ZwJKA9llWWJBukRjwdbx0LqiIDqnWoPxS8YHCXR5ZKnmnzo0mgVI67rstv9s8C2RegHyG95au9TPVDpnQ*rpkvEXRRPWyKWYtaBzzQA4Kk6yeiROUWYbmoJxKI563Upo&new=1)
+
+[关于微服务架构入门篇](https://mp.weixin.qq.com/s?src=11&timestamp=1612238381&ver=2865&signature=DylUQ5PlN9t6m9icK9wimBOQfe02GmnvAGKa7R6GP9qbDTmxGtnQFebKz7EkAyq25f3evk5jFMVabsZAn649jOcbcN8PR*3ymKz6M4IINU7qoXnEJgJA-ib8Qz6HE6zz&new=1)
+
+[从单体架构到微服务架构](https://mp.weixin.qq.com/s?src=11&timestamp=1612238872&ver=2865&signature=Prvf1LathhYbjcm-NAPpBHGAt7GQZD*Tq4KRoSt9rPFVehMnv2u2qiQFQ-bSA26rH-FwY80lG5pVcHuMJ7C6Iw05TLtHitlBuIcU9Kvq6h2ipl3qI*CwzFiO3bwV4Umq&new=1)
+
+[单体架构和微服务系统架构的优缺点](https://mp.weixin.qq.com/s?src=11&timestamp=1612236621&ver=2865&signature=GK9KHPwtc2ocpe8rmgTBGxGFKl5f23o-EBd-IlNYXpV-g0hgleM91U6s9Hh9ZPHqjf4rHVFmCziZl4uDuNohgU3lezUN3fw7ojXZfqKg2gMf2476KaD-z4kCTmyHb7QX&new=1)
 
